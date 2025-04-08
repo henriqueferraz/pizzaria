@@ -1,0 +1,74 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Category {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Product Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  price       String
+  description String
+  banner      String
+  categoryId  String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+  Item     Item[]
+
+  @@map("products")
+}
+
+model Order {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  table     Int
+  status    Boolean  @default(false)
+  draft     Boolean  @default(true)
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Item Item[]
+
+  @@map("orders")
+}
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Int
+  orderId   String   @db.ObjectId
+  productId String   @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("items")
+}
