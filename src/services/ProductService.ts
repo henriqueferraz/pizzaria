@@ -35,3 +35,23 @@ export const postCreateProduct =
         });
         return newProduct;
     };
+
+
+// ---- FUNÇÃO PARA LISTAR PRODUTOS ---- //
+export const getListProduct =
+    async ({ categoryId }: Omit<Product, "id" | "createdAt" | "updatedAt" | "banner" | "description" | "name" | "price">) => {
+
+        const findByCategory = await prisma.product.findMany({
+            where: {
+                categoryId,
+            }
+        });
+
+        if (findByCategory.length === 0) {
+            throw new Error("Não existe produtos nessa categoria!");
+            return;
+        }
+        console.log(findByCategory);
+        return findByCategory;
+
+    };

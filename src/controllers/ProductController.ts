@@ -1,8 +1,9 @@
 import { RequestHandler } from "express";
 import { CreateProductSchema } from "../schemas/CreateProductSchema";
-import { postCreateProduct } from "../services/ProductService";
+import { postCreateProduct, getListProduct } from "../services/ProductService";
+import { ListProductSchema } from "../schemas/ListProductSchema";
 
-// ---- FUNÇÃO PARA CRIAR CATEGORIAS ---- //
+// ---- FUNÇÃO PARA CRIAR PRODUTOS ---- //
 export const createProduct: RequestHandler = async (req, res) => {
 
     const data = CreateProductSchema.safeParse(req.body);
@@ -30,4 +31,22 @@ export const createProduct: RequestHandler = async (req, res) => {
         res.json(category);
     };
 
+};
+
+
+// ---- FUNÇÃO PARA LISTAR PRODUTOS ---- //
+export const listProduct: RequestHandler = async (req, res) => {
+
+    const data = ListProductSchema.safeParse(req.body);
+
+    if (!data.success) {
+        res.json({ error: data.error.flatten().fieldErrors });
+        return;
+    };
+
+    const category = await getListProduct({
+        categoryId: data.data.categoryId,
+    });
+
+    res.json(category);
 };
