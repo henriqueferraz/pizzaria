@@ -1,5 +1,5 @@
 import { prisma } from "../libs/prisma";
-import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/CreateOrderSchema";
+import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/OrderSchema";
 import { z } from "zod";
 
 export const postCreateOrder =

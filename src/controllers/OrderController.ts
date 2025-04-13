@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/CreateOrderSchema";
-import { deleteOrder, postCreateOrder } from "../services/OrderService";
+import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/OrderSchema";
+import * as OrderController from "../services/OrderService";
 
 // ---- FUNÇÃO PARA CRIAR PRODUTOS ---- //
 export const createOrder: RequestHandler = async (req, res) => {
@@ -12,7 +12,7 @@ export const createOrder: RequestHandler = async (req, res) => {
         return;
     };
 
-    const order = await postCreateOrder({
+    const order = await OrderController.postCreateOrder({
         table: data.data.table,
         name: data.data.name
     });
@@ -32,7 +32,7 @@ export const deletOrder: RequestHandler = async (req, res) => {
         return;
     };
 
-    const order = await deleteOrder({
+    const order = await OrderController.deleteOrder({
         order_id: data.data.order_id
     });
 
