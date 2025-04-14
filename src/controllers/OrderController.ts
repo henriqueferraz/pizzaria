@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/OrderSchema";
 import * as OrderController from "../services/OrderService";
 
-// ---- FUNÇÃO PARA CRIAR PRODUTOS ---- //
+// ---- FUNÇÃO PARA CRIAR PEDIDOS ---- //
 export const createOrder: RequestHandler = async (req, res) => {
 
     const data = CreateOrderSchema.safeParse(req.body);
@@ -22,10 +22,10 @@ export const createOrder: RequestHandler = async (req, res) => {
 };
 
 
-// ---- FUNÇÃO PARA DELETAR PRODUTOS ---- //
+// ---- FUNÇÃO PARA DELETAR PEDIDOS ---- //
 export const deletOrder: RequestHandler = async (req, res) => {
 
-    const data = DeleteOrderSchema.safeParse(req.body);
+    const data = DeleteOrderSchema.safeParse(req.query);
 
     if (!data.success) {
         res.json({ error: data.error.flatten().fieldErrors });

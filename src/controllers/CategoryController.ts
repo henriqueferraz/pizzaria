@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { CreateCategorySchema } from "../schemas/CreateCategorySchema";
+import { CreateCategorySchema } from "../schemas/CategorySchema";
 import { getListCategory, postCreateCategory } from "../services/CategoryService";
 
 // ---- FUNÇÃO PARA CRIAR CATEGORIAS ---- //

@@ -6,6 +6,7 @@ import * as userController from "./controllers/UserController";
 import * as categoryController from "./controllers/CategoryController";
 import * as productController from "./controllers/ProductController";
 import * as orderController from "./controllers/OrderController";
+import * as itemController from "./controllers/ItemController";
 
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import uploadConfig from "./config/multer";
@@ -45,3 +46,6 @@ router.post('/order', isAuthenticated, orderController.createOrder);
 
 //---- ROTAS PARA DELETAR PEDIDOS ----//
 router.delete('/order', isAuthenticated, orderController.deletOrder);
+
+//---- ROTAS PARA CRIAR ITEMS NO PEDIDO ----//
+router.post('/order/add', isAuthenticated, itemController.createItem);

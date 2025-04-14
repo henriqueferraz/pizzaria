@@ -5,7 +5,7 @@ import { z } from "zod";
 export const postCreateOrder =
     async ({ table, name }: z.infer<typeof CreateOrderSchema>) => {
 
-        // Criar um novo produto no banco
+        // Criar um novo pedido no banco
         const newProduct = await prisma.order.create({
             data: {
                 table,
@@ -29,7 +29,7 @@ export const postCreateOrder =
 export const deleteOrder =
     async ({ order_id }: z.infer<typeof DeleteOrderSchema>) => {
 
-        // Criar um novo produto no banco
+        // Deletar um pedido no banco
         const newProduct = await prisma.order.delete({
             where: {
                 id: order_id
@@ -48,3 +48,4 @@ export const deleteOrder =
 
         return newProduct;
     };
+

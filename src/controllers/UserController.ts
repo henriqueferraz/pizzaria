@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { CreateUserSchema } from "../schemas/CreateUserSchema";
+import { CreateUserSchema } from "../schemas/UserSchema";
 import { getDetailUser, postAuthUser, postCreateUser } from "../services/UserService";
 
 

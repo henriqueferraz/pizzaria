@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
-import { CreateProductSchema } from "../schemas/CreateProductSchema";
 import { postCreateProduct, getListProduct } from "../services/ProductService";
-import { ListProductSchema } from "../schemas/ListProductSchema";
+import { CreateProductSchema, ListProductSchema } from "../schemas/ProductSchema";
+
 
 // ---- FUNÇÃO PARA CRIAR PRODUTOS ---- //
 export const createProduct: RequestHandler = async (req, res) => {
