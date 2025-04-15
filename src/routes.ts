@@ -58,3 +58,9 @@ router.put('/order/send', isAuthenticated, orderController.sendOrder);
 
 //---- ROTAS PARA LISTAR PEDIDOS ENVIADOS ----//
 router.get('/orders', isAuthenticated, orderController.listOrder);
+
+//---- ROTAS PARA LISTAR PEDIDOS ENVIADOS ----//
+router.get('/order/detail', isAuthenticated, orderController.detailOrder);
+
+//---- ROTAS PARA FINALIZAR UM PEDIDOS ----//
+router.put('/order/finish', isAuthenticated, orderController.finishOrder);

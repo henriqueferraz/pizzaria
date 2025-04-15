@@ -9,3 +9,10 @@ export const CreateItemSchema = z.object({
 export const DeleteItemSchema = z.object({
     item_id: z.string()
 });
+
+
+export const DetailItemSchema = z.object({
+    order_id: z.string(),
+    amount: z.number().optional(),
+    product_id: z.string().optional(),
+});
