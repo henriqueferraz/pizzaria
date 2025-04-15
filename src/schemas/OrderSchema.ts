@@ -6,6 +6,6 @@ export const CreateOrderSchema = z.object({
     order_id: z.string().optional(),
 });
 
-export const DeleteOrderSchema = z.object({
+export const OrderSchema = z.object({
     order_id: z.string()
 });

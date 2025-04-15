@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 import * as ItemController from "../services/ItemService";
-import { CreateItemSchema } from "../schemas/ItemSchema";
+import { CreateItemSchema, DeleteItemSchema } from "../schemas/ItemSchema";
 
-// ---- FUNÇÃO PARA CRIAR PEDIDOS ---- //
+// ---- FUNÇÃO PARA CRIAR ITEMS NO PEDIDOS ---- //
 export const createItem: RequestHandler = async (req, res) => {
 
     const data = CreateItemSchema.safeParse(req.body);
@@ -19,5 +19,23 @@ export const createItem: RequestHandler = async (req, res) => {
     });
 
     res.json(item);
+
+};
+
+// ---- FUNÇÃO PARA DELETAR ITEM NO PEDIDOS ---- //
+export const deletItem: RequestHandler = async (req, res) => {
+
+    const data = DeleteItemSchema.safeParse(req.query);
+
+    if (!data.success) {
+        res.json({ error: data.error.flatten().fieldErrors });
+        return;
+    };
+
+    const order = await ItemController.deleteItemOrder({
+        item_id: data.data.item_id
+    });
+
+    res.json(order);
 
 };

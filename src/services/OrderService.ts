@@ -1,5 +1,5 @@
 import { prisma } from "../libs/prisma";
-import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/OrderSchema";
+import { CreateOrderSchema, OrderSchema } from "../schemas/OrderSchema";
 import { z } from "zod";
 
 export const postCreateOrder =
@@ -27,7 +27,7 @@ export const postCreateOrder =
     };
 
 export const deleteOrder =
-    async ({ order_id }: z.infer<typeof DeleteOrderSchema>) => {
+    async ({ order_id }: z.infer<typeof OrderSchema>) => {
 
         // Deletar um pedido no banco
         const newProduct = await prisma.order.delete({
@@ -49,3 +49,58 @@ export const deleteOrder =
         return newProduct;
     };
 
+
+export const sendOrder =
+    async ({ order_id }: z.infer<typeof OrderSchema>) => {
+
+        // Atualizar um novo pedido no banco
+        const newOrder = await prisma.order.update({
+            where: {
+                id: order_id
+            },
+            data: {
+                draft: false,
+            },
+            select: {
+                id: true,
+                name: true,
+                table: true,
+                status: true,
+                draft: true,
+                createdAt: true,
+                updatedAt: true,
+
+            }
+        });
+
+        return newOrder;
+    };
+
+
+export const listOrder =
+    async () => {
+
+        // Listar todos os pedidos no banco aprovados
+        const listOrders = await prisma.order.findMany({
+            where: {
+                draft: false,
+                status: false,
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
+            select: {
+                id: true,
+                name: true,
+                table: true,
+                status: true,
+                draft: true,
+                createdAt: true,
+                updatedAt: true,
+
+            }
+        });
+        console.log(listOrders);
+
+        return listOrders;
+    };

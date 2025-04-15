@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { CreateOrderSchema, DeleteOrderSchema } from "../schemas/OrderSchema";
+import { CreateOrderSchema, OrderSchema } from "../schemas/OrderSchema";
 import * as OrderController from "../services/OrderService";
 
 // ---- FUNÇÃO PARA CRIAR PEDIDOS ---- //
@@ -25,7 +25,7 @@ export const createOrder: RequestHandler = async (req, res) => {
 // ---- FUNÇÃO PARA DELETAR PEDIDOS ---- //
 export const deletOrder: RequestHandler = async (req, res) => {
 
-    const data = DeleteOrderSchema.safeParse(req.query);
+    const data = OrderSchema.safeParse(req.query);
 
     if (!data.success) {
         res.json({ error: data.error.flatten().fieldErrors });
@@ -37,5 +37,33 @@ export const deletOrder: RequestHandler = async (req, res) => {
     });
 
     res.json(order);
+
+};
+
+
+// ---- FUNÇÃO PARA ALTERAR O PEDIDO PARA ENVIO ---- //
+export const sendOrder: RequestHandler = async (req, res) => {
+
+    const data = OrderSchema.safeParse(req.body);
+
+    if (!data.success) {
+        res.json({ error: data.error.flatten().fieldErrors });
+        return;
+    };
+
+    const order = await OrderController.sendOrder({
+        order_id: data.data.order_id
+    });
+
+    res.json(order);
+
+};
+
+// ---- FUNÇÃO PARA LISTAR OS PEDIDOS ENVIADOS ---- //
+export const listOrder: RequestHandler = async (req, res) => {
+
+    const orders = await OrderController.listOrder();
+
+    res.json(orders);
 
 };

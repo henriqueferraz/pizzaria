@@ -49,3 +49,12 @@ router.delete('/order', isAuthenticated, orderController.deletOrder);
 
 //---- ROTAS PARA CRIAR ITEMS NO PEDIDO ----//
 router.post('/order/add', isAuthenticated, itemController.createItem);
+
+//---- ROTAS PARA DELETAR ITEMS NO PEDIDO ----//
+router.delete('/order/delete', isAuthenticated, itemController.deletItem);
+
+//---- ROTAS PARA ATUALIZAR ITEMS NO PEDIDO ----//
+router.put('/order/send', isAuthenticated, orderController.sendOrder);
+
+//---- ROTAS PARA LISTAR PEDIDOS ENVIADOS ----//
+router.get('/orders', isAuthenticated, orderController.listOrder);
